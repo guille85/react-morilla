@@ -2,14 +2,13 @@ import React from "react";
 import { AppBar, IconButton, Toolbar } from "@mui/material";
 import { Typography } from "@mui/material";
 import Container from '@mui/material/Container';
-import AdbIcon from '@mui/icons-material/Adb';
+import CartWidget from "./CartWidget";
 
 export const NavBar = () => {
     return (
-        <AppBar>
+        <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar>
-                    <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
                     <Typography
                         variant="h3"
                         noWrap
@@ -28,7 +27,10 @@ export const NavBar = () => {
                         E-Codders
                     </Typography>
                     <Typography variant="h6">
-                        <IconButton>Cursos</IconButton>
+                        <IconButton>Home</IconButton>
+                    </Typography>
+                    <Typography variant="h6">
+                        <IconButton>Mis cursos</IconButton>
                     </Typography>
                     <Typography variant="h6">
                         <IconButton>Favoritos</IconButton>
@@ -39,6 +41,7 @@ export const NavBar = () => {
                     <Typography variant="h6">
                         <IconButton>Nosotros</IconButton>
                     </Typography>
+                    <CartWidget qtyItems={5} justify-xs-flex-end/>
                 </Toolbar>
             </Container>
         </AppBar>
