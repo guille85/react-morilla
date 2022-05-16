@@ -7,9 +7,7 @@ const App = () => {
   return (
     <>
       <NavBar/>
-      <section>
-        <ItemListContainer greeting='Bienvenido a nuestra tienda!!' sx={{ flexGrow: 0, display: { xl: "flex-end", md: "none" } }}/> 
-      </section>
+        <ItemListContainer greeting='Bienvenido a nuestra tienda!!' sx={{ flexGrow: 0, display: { xs: "flex-end", md: "none" } }}/> 
     </>
   );
 }

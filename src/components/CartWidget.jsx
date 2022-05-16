@@ -8,14 +8,14 @@ export default function CartWidget( {qtyItems}) {
       <>
         <Badge
           badgeContent={qtyItems}
-          color="action"
+          color="primary"
           anchorOrigin={{
             vertical: "top",
             horizontal: "right",
           }}
         >
-            <ShoppingCartIcon/>
-            <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}></Box> 
+          <ShoppingCartIcon />
+          <Box sx={{ flexGrow: 0, display: { xs: "flex", md: "none" } }}></Box>
         </Badge>
       </>
     );
