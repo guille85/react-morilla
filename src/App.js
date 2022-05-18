@@ -1,9 +1,11 @@
+import { useEffect, useState } from 'react';
 import './App.css';
 import ItemListContainer from './components/ItemListContainer';
 import { NavBar } from "./components/NavBar"
 
 
-const App = () => {
+const App = () => { 
+
   return (
     <>
       <NavBar/>

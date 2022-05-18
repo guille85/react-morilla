@@ -1,16 +1,50 @@
 import React from 'react'
-import ItemCount from './ItemCount'
+import ItemList from './ItemList';
+import { useEffect, useState } from 'react';
+import { Grid } from '@mui/material';
 
 export default function ItemListContainer({ greeting }) {
 
-const onAdd=(cantidad)=>{
-  alert("Elementos agregados: " + cantidad);
-}
+let cursos = [
+  { id: "1", title: "Java",   description: "Intermedio", price: "$10.000", pictureUrl:"../assets/java" },
+  { id: "2", title: "Python", description: "Básico", price: "$8.000", pictureUrl:""},
+  { id: "3", title: "PHP", description: "Básico", price: "$12.000", pictureUrl:""},
+  {id: "4", title: "React", description: "Básico", price: "$15.000", pictureUrl:""}
+];
+const [listaCursos, setListaCursos] = useState([]);
+const [error, setError] = useState(false);
+const [loading, setLoading] = useState("Loading...");
 
+useEffect(() => {
+const traerCursos = new Promise((result, reject) => {
+setTimeout(() => {
+  result(cursos);
+}, 2000);
+});
+//console.log(traerCursos);
+
+traerCursos
+  .then((res) => {
+    setListaCursos(res);
+  })
+  .catch((error) => {
+    setError(error);
+  }
+  )
+  .finally(() => setLoading(""));
+}, []);
+
+if(error){
+  <h1>Ha ocurrido un error, intente nuevamente!!</h1>
+}
   return (
       <>
-        <h1>{ greeting } </h1>
-        <ItemCount stock={12} initial={1} onAdd={onAdd}/>
+        <p>{loading}</p>
+        <Grid container direction="row" justifyContent="left" spacing={1} >
+          { listaCursos && listaCursos.map((item, index) => 
+            <ItemList key={index} curso={item}></ItemList>
+          )}
+        </Grid>        
       </>
   )
 }
