@@ -1,9 +1,9 @@
 import React from 'react'
-import ItemList from './ItemList';
+import ItemDetail from './ItemDetail';
 import { useEffect, useState } from 'react';
 import { Grid } from '@mui/material';
 
-export default function ItemListContainer({ greeting }) {
+export default function ItemDetailContainer() {
 
 let cursos = [
   { id: "1", title: "Java",   description: "Intermedio", price: "$10.000", pictureUrl:"https://i.imgur.com/WxUmkn5.jpg" },
@@ -11,25 +11,23 @@ let cursos = [
   { id: "3", title: "PHP", description: "Básico", price: "$12.000", pictureUrl:"https://dc722jrlp2zu8.cloudfront.net/media/cache/51/86/5186e22a3ab7182a5a8324999ba7c4cd.webp"},
   {id: "4", title: "React", description: "Básico", price: "$15.000", pictureUrl:"https://www.freecodecamp.org/espanol/news/content/images/size/w2000/2022/02/thumbnail-2.png"}
 ];
-const [listaCursos, setListaCursos] = useState([]);
+const [detailCurso, setDetailCurso] = useState({});
 const [error, setError] = useState(false);
 const [loading, setLoading] = useState("Loading...");
 
 useEffect(() => {
-const traerCursos = new Promise((result, reject) => {
+const traerDetailCurso = new Promise((result, reject) => {
 setTimeout(() => {
-  result(cursos);
+  result(cursos.find(item => item.id === "3"));
 }, 2000);
 });
 
-traerCursos
+traerDetailCurso
   .then((res) => {
-    setListaCursos(res);
-    setLoading("")
+    setDetailCurso(res);
   })
   .catch((error) => {
     setError(error);
-    setLoading("");
   }
   )
   .finally(() => setLoading(""));
@@ -41,11 +39,11 @@ if(error){
   return (
       <>
         <p>{loading}</p>
-        <Grid container direction="row" justifyContent="left" spacing={1} >
-          { listaCursos && listaCursos.map((item, index) => 
-            <ItemList key={index} curso={item}></ItemList>
-          )}
-        </Grid>        
+        { !loading && <Grid container direction="row" justifyContent="left" spacing={1} >
+          { 
+            <ItemDetail curso={detailCurso}></ItemDetail>
+          }
+        </Grid> }       
       </>
   )
 }

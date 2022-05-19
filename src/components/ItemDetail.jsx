@@ -1,23 +1,17 @@
 import React from 'react'
-import ItemCount from './ItemCount';
-import { Card, CardActions, CardContent, Box, Grid } from '@mui/material';
+import { Card, CardActions, CardContent, Grid, Box } from '@mui/material';
 
-export default function Item({curso}) {
-
-  const onAdd=(cantidad)=>{
-    alert("Elementos agregados: " + cantidad);
-  }
-
+export default function ItemDetail({curso}) {
   return (
     <>
-      <Card elevation={3} sx={{ maxWidth: 280, borderRadius: "10px" }}>
+      <Card elevation={3} sx={{ maxWidth: 500, borderRadius: "10px" }}>
         <CardContent>
         <Box 
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          width: '250px',
-          height: '150px',
+          width: "250px",
+          height: "300px",
           overflow: 'hidden',
           borderRadius: '20px' 
         }}
@@ -32,9 +26,6 @@ export default function Item({curso}) {
               <div>Nivel: {curso.description}</div>
               <div>Precio: {curso.price}</div>
               {/*<img src={curso.pictureUrl}></img>*/}
-            </Grid>
-            <Grid item xl={12}>
-              <ItemCount stock={12} initial={1} onAdd={onAdd} />
             </Grid>
           </Grid>
         </CardActions>
