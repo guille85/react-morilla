@@ -1,5 +1,11 @@
+//@ts-check
 import React from 'react'
 import { Card, CardActions, CardContent, Grid, Box } from '@mui/material';
+import ItemCount from './ItemCount';
+
+const onAdd=(cantidad)=>{
+  alert("Elementos agregados: " + cantidad);
+}
 
 export default function ItemDetail({curso}) {
   return (
@@ -20,12 +26,14 @@ export default function ItemDetail({curso}) {
       </Box>
         </CardContent>
         <CardActions>
-          <Grid container spacing={2} direction="row" justifyContent="center" >
+          <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
             <Grid item xl={12}>
               <div>Curso {curso.title}</div>
               <div>Nivel: {curso.description}</div>
               <div>Precio: {curso.price}</div>
-              {/*<img src={curso.pictureUrl}></img>*/}
+            </Grid>
+            <Grid item xl={12}>
+              <ItemCount stock={12} initial={1} onAdd={onAdd} />
             </Grid>
           </Grid>
         </CardActions>

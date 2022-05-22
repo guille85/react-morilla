@@ -18,7 +18,7 @@ export default function ItemCount({stock, initial, onAdd}) {
     }
 
   return (
-    <Grid container spacing={2} direction="row" justifyContent="center">
+    <Grid container spacing={2} direction="column" justifyContent="center">
       <Grid item xl={12}>
         <ButtonGroup>
           <Button variant="contained"

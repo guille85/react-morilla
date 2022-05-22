@@ -1,3 +1,4 @@
+//@ts-check
 import './App.css';
 import { NavBar } from "./components/NavBar";
 import ItemListContainer from './components/ItemListContainer';
@@ -14,12 +15,11 @@ const App = () => {
       <NavBar/>
       <Routes>
         <Route path="/" element={<ItemListContainer greeting='Bienvenido a nuestra tienda!!' sx={{ flexGrow: 0, display: { xs: "flex-end", md: "none" } }}/> }/>
-        <Route path="/detail" element={<ItemDetailContainer/>} />
+        <Route path="/category/:categoryId" element={<ItemListContainer greeting='Bienvenido a nuestra tienda!!' sx={{ flexGrow: 0, display: { xs: "flex-end", md: "none" } }}/> }/> 
+        <Route path="/detail/:detailId" element={<ItemDetailContainer/>}/>
         <Route path="/*" element={<h1>Error 404</h1>}/>
       </Routes>
       </BrowserRouter>
-    {/*  <ItemListContainer greeting='Bienvenido a nuestra tienda!!' sx={{ flexGrow: 0, display: { xs: "flex-end", md: "none" } }}/> 
-      <ItemDetailContainer></ItemDetailContainer> */}
     </>
   );
 }

@@ -1,12 +1,15 @@
-import React from 'react'
-import ItemCount from './ItemCount';
-import { Card, CardActions, CardContent, Box, Grid } from '@mui/material';
+//@ts-check
+import React, { useEffect, useState } from 'react'
+import { Card, CardActions, CardContent, Box, Grid, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 export default function Item({curso}) {
 
-  const onAdd=(cantidad)=>{
-    alert("Elementos agregados: " + cantidad);
-  }
+  const[filtro, setFiltro] = useState("");
+
+  useEffect(()=>{
+    setFiltro("/detail/" + curso.id);
+  }, [curso.id]);
 
   return (
     <>
@@ -31,10 +34,10 @@ export default function Item({curso}) {
               <div>Curso {curso.title}</div>
               <div>Nivel: {curso.description}</div>
               <div>Precio: {curso.price}</div>
-              {/*<img src={curso.pictureUrl}></img>*/}
-            </Grid>
-            <Grid item xl={12}>
-              <ItemCount stock={12} initial={1} onAdd={onAdd} />
+              <Button component={Link} to={filtro} variant="contained" color='primary'>
+                Ver mas...
+              </Button>
+              
             </Grid>
           </Grid>
         </CardActions>
