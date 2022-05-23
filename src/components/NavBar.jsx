@@ -1,6 +1,6 @@
 //@ts-check
 import React from "react";
-import { AppBar, Button, IconButton, Toolbar } from "@mui/material";
+import { AppBar, Toolbar } from "@mui/material";
 import { Typography } from "@mui/material";
 import Container from '@mui/material/Container';
 import CartWidget from "./CartWidget";

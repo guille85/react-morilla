@@ -1,7 +1,8 @@
 //@ts-check
 import React from 'react'
-import { Card, CardActions, CardContent, Grid, Box } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import ItemCount from './ItemCount';
+import { grey } from '@mui/material/colors';
 
 const onAdd=(cantidad)=>{
   alert("Elementos agregados: " + cantidad);
@@ -10,34 +11,58 @@ const onAdd=(cantidad)=>{
 export default function ItemDetail({curso}) {
   return (
     <>
-      <Card elevation={3} sx={{ maxWidth: 500, borderRadius: "10px" }}>
-        <CardContent>
-        <Box 
+      <Box 
+      sx={{
+        width: '100%',
+        backgroundColor: grey[100],
+        borderRadius: '20px',
+        padding: '20px',
+        display: 'flex',
+        gap: 2,
+        height: {
+          xs: 'auto',
+          md: '500px'
+        },
+        flexDirection: {
+          xs: 'column',
+          md: 'row'
+        }
+      }}
+    >
+      <Box 
         sx={{
           display: 'flex',
           justifyContent: 'center',
-          width: "250px",
-          height: "300px",
+          width: {xs: '100%', md:'50%'},
+          height: {xs: '280px', sm: '420px', md: 'auto'},
           overflow: 'hidden',
           borderRadius: '20px' 
         }}
       >
         <img src={curso.pictureUrl} alt={curso.title} sx={{flexShrink: 1, minWidth: '100%', minHeight: 'auto', objectFit: 'cover' }} />
       </Box>
-        </CardContent>
-        <CardActions>
-          <Grid container spacing={2} direction="column" justifyContent="center" alignItems="center">
-            <Grid item xl={12}>
-              <div>Curso {curso.title}</div>
-              <div>Nivel: {curso.description}</div>
-              <div>Precio: {curso.price}</div>
-            </Grid>
-            <Grid item xl={12}>
-              <ItemCount stock={12} initial={1} onAdd={onAdd} />
-            </Grid>
-          </Grid>
-        </CardActions>
-      </Card>
+
+      <Box
+        sx={{
+          display: 'flex',
+          width: {xs: '100%', md: '50%'},
+          flexDirection: 'column',
+          justifyContent: 'center',
+          textAlign: 'center',
+          gap: 2,
+          maxWidth: {xs: 'auto', md: '400px'},
+          margin: 'auto'
+        }}
+      >
+
+        <Typography variant='h4'>{ curso.title }</Typography>
+        <Typography variant='body1'>{ curso.description }</Typography>
+        <Typography variant='h4'>{ curso.price }</Typography>
+
+        <ItemCount stock={curso.stock} initial={1} onAdd={onAdd} />
+
+      </Box>
+    </Box>
     </>
   );
 }
