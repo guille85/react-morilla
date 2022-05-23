@@ -1,14 +1,19 @@
 //@ts-check
-import React from 'react'
+import React, { useState } from 'react'
 import { Box, Typography } from '@mui/material';
 import ItemCount from './ItemCount';
 import { grey } from '@mui/material/colors';
 
+export default function ItemDetail({curso}) {
+
+  const [prodCart, setProdCart] = useState(null);
+
 const onAdd=(cantidad)=>{
-  alert("Elementos agregados: " + cantidad);
+  if(cantidad > 0){
+    setProdCart(cantidad);
+  }
 }
 
-export default function ItemDetail({curso}) {
   return (
     <>
       <Box 
@@ -59,7 +64,7 @@ export default function ItemDetail({curso}) {
         <Typography variant='body1'>{ curso.description }</Typography>
         <Typography variant='h4'>{ curso.price }</Typography>
 
-        <ItemCount stock={curso.stock} initial={1} onAdd={onAdd} />
+        <ItemCount stock={curso.stock} initial={1} onAdd={onAdd} prodCart={prodCart} />
 
       </Box>
     </Box>
