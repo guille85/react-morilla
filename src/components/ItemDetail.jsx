@@ -8,7 +8,7 @@ import {Link} from 'react-router-dom';
 
 export default function ItemDetail({curso}) {
 
-  const { id, title, description, pictureUrl, price, stock } = curso;
+  const { id, stock } = curso;
 
   const [prodInCart, setProdInCart] = useState(false); // indica si un producto está o no en el carro
 
@@ -32,8 +32,7 @@ export default function ItemDetail({curso}) {
     <Box 
       sx={{
         width: '100%',
-        backgroundColor: grey[100],
-        borderRadius: '20px',
+        backgroundColor: grey[300],
         padding: '20px',
         display: 'flex',
         gap: 2,
@@ -54,7 +53,7 @@ export default function ItemDetail({curso}) {
           width: {xs: '100%', md:'50%'},
           height: {xs: '280px', sm: '420px', md: 'auto'},
           overflow: 'hidden',
-          borderRadius: '20px' 
+          borderRadius: '10px' 
         }}
       >
         <img src={curso.pictureUrl} alt={curso.title} style={{flexShrink: 1, minWidth: '100%', minHeight: 'auto', objectFit: 'cover' }} />
@@ -75,7 +74,7 @@ export default function ItemDetail({curso}) {
 
         <Typography variant='h4'>{ curso.title }</Typography>
         <Typography variant='body1'>{ curso.description }</Typography>
-        <Typography variant='h4'>{ curso.price }</Typography>
+        <Typography variant='h4'>${ curso.price }</Typography>
         { !prodInCart ?
           <ItemCount stock={stock} initial={1} onAdd={onAdd} />
           :

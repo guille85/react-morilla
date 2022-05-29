@@ -4,9 +4,10 @@ import { AppBar, Toolbar } from "@mui/material";
 import { Typography } from "@mui/material";
 import Container from '@mui/material/Container';
 import CartWidget from "./CartWidget";
-import { NavLink } from 'react-router-dom';
+import {NavLink, Link} from 'react-router-dom';
 import { Box } from "@mui/system";
 import { CartContext } from '../context/cart/CartContext';
+import IconButton from '@mui/material/IconButton';
 
 let menuOptions= [
   {
@@ -24,7 +25,7 @@ let menuOptions= [
 
 export const NavBar = () => {
 
-  const { cart } = useContext(CartContext);
+  const { totalInCart } = useContext(CartContext);
 
     return (
       <AppBar position="static">
@@ -58,7 +59,9 @@ export const NavBar = () => {
               ))
             }
           </Box>
-            <CartWidget qtyItems={ cart.length } justify-xs-flex-end />
+          <IconButton component={Link} to="/cart" style={{color:"white"}}>
+            <CartWidget qtyItems={totalInCart()} justify-xs-flex-end />
+          </IconButton>
           </Toolbar>
         </Container>
       </AppBar>
