@@ -1,22 +1,35 @@
 //@ts-check
-import React, { useState } from 'react'
-import { Box, Typography } from '@mui/material';
+import React, { useContext, useState } from 'react'
+import {Box, Typography, Button} from '@mui/material';
 import ItemCount from './ItemCount';
 import { grey } from '@mui/material/colors';
+import { CartContext } from '../context/cart/CartContext';
+import {Link} from 'react-router-dom';
 
 export default function ItemDetail({curso}) {
 
-  const [prodCart, setProdCart] = useState(null);
+  const { id, title, description, pictureUrl, price, stock } = curso;
 
-const onAdd=(cantidad)=>{
-  if(cantidad > 0){
-    setProdCart(cantidad);
+  const [prodInCart, setProdInCart] = useState(false); // indica si un producto está o no en el carro
+
+  const {addItem, removeItem} = useContext(CartContext);
+
+  const onAdd = (count) => {
+    if (count > 0) {
+      addItem({...curso, quantity:count});
+      setProdInCart(true);
+    } else {
+      alert('La cantidad no puede ser 0!');
+    }
+  };
+
+  const removeOfCart = () => {
+       removeItem(id);
+       setProdInCart(false);
   }
-}
 
   return (
-    <>
-      <Box 
+    <Box 
       sx={{
         width: '100%',
         backgroundColor: grey[100],
@@ -44,7 +57,7 @@ const onAdd=(cantidad)=>{
           borderRadius: '20px' 
         }}
       >
-        <img src={curso.pictureUrl} alt={curso.title} sx={{flexShrink: 1, minWidth: '100%', minHeight: 'auto', objectFit: 'cover' }} />
+        <img src={curso.pictureUrl} alt={curso.title} style={{flexShrink: 1, minWidth: '100%', minHeight: 'auto', objectFit: 'cover' }} />
       </Box>
 
       <Box
@@ -63,11 +76,38 @@ const onAdd=(cantidad)=>{
         <Typography variant='h4'>{ curso.title }</Typography>
         <Typography variant='body1'>{ curso.description }</Typography>
         <Typography variant='h4'>{ curso.price }</Typography>
-
-        <ItemCount stock={curso.stock} initial={1} onAdd={onAdd} prodCart={prodCart} />
-
+        { !prodInCart ?
+          <ItemCount stock={stock} initial={1} onAdd={onAdd} />
+          :
+            <>
+              <Typography variant="body2" sx={{ marginBottom: 2 }}>
+                ¡Producto agregado al carrito!
+              </Typography>
+              <Button
+                component={Link}
+                to="/cart"
+                variant="contained"
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  padding: "6px 16px",
+                }}
+              >
+                Ir al carrito
+              </Button>
+              <Button variant="contained"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    padding: '6px 16px'
+                  }}
+                  onClick={removeOfCart}
+              >
+              Eliminar del carrito
+              </Button>
+            </>
+          }
       </Box>
     </Box>
-    </>
-  );
+  )
 }

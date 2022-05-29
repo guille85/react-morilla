@@ -1,11 +1,12 @@
 //@ts-check
-import React from "react";
+import React, { useContext} from "react";
 import { AppBar, Toolbar } from "@mui/material";
 import { Typography } from "@mui/material";
 import Container from '@mui/material/Container';
 import CartWidget from "./CartWidget";
 import { NavLink } from 'react-router-dom';
 import { Box } from "@mui/system";
+import { CartContext } from '../context/cart/CartContext';
 
 let menuOptions= [
   {
@@ -22,6 +23,9 @@ let menuOptions= [
 ];
 
 export const NavBar = () => {
+
+  const { cart } = useContext(CartContext);
+
     return (
       <AppBar position="static">
         <Container maxWidth="xl">
@@ -54,7 +58,7 @@ export const NavBar = () => {
               ))
             }
           </Box>
-            <CartWidget qtyItems={5} justify-xs-flex-end />
+            <CartWidget qtyItems={ cart.length } justify-xs-flex-end />
           </Toolbar>
         </Container>
       </AppBar>

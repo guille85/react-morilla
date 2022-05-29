@@ -1,76 +1,55 @@
 //@ts-check
-import { Button, ButtonGroup, Grid, Box, Typography } from '@mui/material';
+import { Button, ButtonGroup, Grid, Box } from '@mui/material';
 import React, {useState} from 'react';
-import { Link } from 'react-router-dom';
 
-export default function ItemCount({stock, initial, onAdd, prodCart}) {
+export default function ItemCount({stock, initial, onAdd}) {
 
-    const [cantidad, setCantidad] = useState(initial);
+    const [quantity, setQuantity] = useState(initial);
 
     const sumar =()=>{
-      if(cantidad<=stock){
-        setCantidad(cantidad+1);
+      if(quantity<=stock){
+        setQuantity(quantity+1);
       }
     }
 
     const restar=()=>{
-      if(cantidad>0){
-        setCantidad(cantidad-1);
+      if(quantity>0){
+        setQuantity(quantity-1);
       }
     }
 
   return (
     <Box>
-      {prodCart ? (
-        <>
-          <Typography variant="body2" sx={{ marginBottom: 2 }}>
-            ¡Producto agregado al carrito!
-          </Typography>
-          <Button
-            component={Link}
-            to="/cart"
-            variant="contained"
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              padding: "6px 16px",
-            }}
-          >
-            Ir al carrito
-          </Button>
-        </>
-      ) : (
-        <Grid container spacing={2} direction="column" justifyContent="center">
-          <Grid item xl={12}>
-            <ButtonGroup>
-              <Button
-                variant="contained"
-                disabled={cantidad === 0}
-                onClick={() => restar()}
-              >
-                -
-              </Button>
-              <Button variant="text">{cantidad}</Button>
-              <Button
-                variant="contained"
-                disabled={cantidad === stock}
-                onClick={() => sumar()}
-              >
-                +
-              </Button>
-            </ButtonGroup>
-          </Grid>
-          <Grid item xl={12}>
+      <Grid container spacing={2} direction="column" justifyContent="center">
+        <Grid item xl={12}>
+          <ButtonGroup>
             <Button
-              disabled={cantidad === 0}
-              variant="outlined"
-              onClick={() => onAdd(cantidad)}
+              variant="contained"
+              disabled={quantity === 0}
+              onClick={() => restar()}
             >
-              Agregar
+              -
             </Button>
-          </Grid>
+            <Button variant="text">{quantity}</Button>
+            <Button
+              variant="contained"
+              disabled={quantity === stock}
+              onClick={() => sumar()}
+            >
+              +
+            </Button>
+          </ButtonGroup>
         </Grid>
-      )}
+        <Grid item xl={12}>
+          <Button
+            variant="contained"
+            disabled={quantity === 0}
+            onClick={() => onAdd(quantity)}
+          >
+            Agregar
+          </Button>
+        </Grid>
+      </Grid>
     </Box>
   );
 }

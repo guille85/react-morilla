@@ -6,7 +6,7 @@ import { Grid } from '@mui/material';
 import cursos from '../mocks/cursosMock';
 import { useParams } from 'react-router-dom';
 
-export default function ItemListContainer({ greeting }) {
+export default function ItemListContainer() {
 const { categoryId } = useParams();
 const [listaCursos, setListaCursos] = useState([]);
 const [error, setError] = useState(false);
@@ -28,7 +28,6 @@ traerCursos
   .then((res) => {
     setListaCursos(res);
     setLoading("");
-    console.log(listaCursos);
   })
   .catch((error) => {
     setError(error);

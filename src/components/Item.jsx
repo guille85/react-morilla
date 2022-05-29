@@ -25,7 +25,7 @@ export default function Item({curso}) {
               borderRadius: '20px' 
             }}
         >
-        <img src={curso.pictureUrl} alt={curso.title} sx={{flexShrink: 1, minWidth: '100%', minHeight: 'auto', objectFit: 'cover' }} />
+        <img src={curso.pictureUrl} alt={curso.title} style={{flexShrink: 1, minWidth: '100%', minHeight: 'auto', objectFit: 'cover' }} />
       </Box>
         </CardContent>
         <CardActions>
