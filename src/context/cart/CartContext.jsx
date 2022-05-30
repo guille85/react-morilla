@@ -27,7 +27,6 @@ export const CartProvider = ({children}) => {
 
     //método removeItem => quita un elemento del carro
     const removeItem = ( itemId ) => {
-        console.log('estoy en el removeItem: ', itemId)
         const newCart = cart.filter(item => item.id !== itemId)
         setCart(newCart);
     }
@@ -54,7 +53,6 @@ export const CartProvider = ({children}) => {
     
       //método que indica la cantidad total de unidades de todos los productos que hay en el carro 
       const totalInCart = () => {
-        console.log('estoy en totalInCart: ', cart)
         return cart.reduce( (acc, item) => {
           return acc = acc + item.quantity
         }, 0)

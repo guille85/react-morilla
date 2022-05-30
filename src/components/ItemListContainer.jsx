@@ -2,39 +2,39 @@
 import React from 'react'
 import ItemList from './ItemList';
 import { useEffect, useState } from 'react';
-import { Grid } from '@mui/material';
-import cursos from '../mocks/cursosMock';
+import { Box, CircularProgress, Grid } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
 
 export default function ItemListContainer() {
 const { categoryId } = useParams();
 const [listaCursos, setListaCursos] = useState([]);
 const [error, setError] = useState(false);
-const [loading, setLoading] = useState("Loading...");
+const [loading, setLoading] = useState(true);
 
 useEffect(() => {
-const traerCursos = new Promise((result, reject) => {
-setTimeout(() => {
-  result(() => {
-  if(categoryId){
-    return cursos.filter(cur => cur.category === categoryId);
-  }
-  return cursos;
-})
-}, 2000);
-});
 
-traerCursos
-  .then((res) => {
-    setListaCursos(res);
-    setLoading("");
-  })
+const db = getFirestore();
+let cursos;
+
+if(categoryId){
+  cursos = query(
+    collection(db, "products"),
+    where("category", "==", categoryId)
+  );
+} else {
+  cursos = collection(db, "products");
+}
+
+getDocs(cursos).then((items) => {
+   setListaCursos(items.docs.map((doc) => ({id: doc.id, ...doc.data()})));
+})
   .catch((error) => {
     setError(error);
-    setLoading("");
+    setLoading(false);
   }
   )
-  .finally(() => setLoading(""));
+  .finally(() => setLoading(false));
 }, [categoryId]);
 
 if(error){
@@ -42,12 +42,30 @@ if(error){
 }
   return (
       <>
-        <p>{loading}</p>
-        <Grid container direction="row" justifyContent="left" spacing={1} >
+      { loading ? (
+          <Box
+            sx={{
+              marginTop: '40px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <CircularProgress
+              variant="indeterminate"
+              size={40}
+              thickness={4}
+              value={100}
+            />
+          </Box>
+        ) : (
+          <Grid container direction="row" justifyContent="left" spacing={1} >
           { listaCursos && listaCursos.map((item, index) => 
             <ItemList key={index} curso={item}></ItemList>
           )}
-        </Grid>        
+        </Grid>
+        )}
+                
       </>
   )
 }

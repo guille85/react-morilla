@@ -13,7 +13,7 @@ export default function Item({curso}) {
 
   return (
     <>
-      <Card elevation={3} sx={{ maxWidth: 280, borderRadius: "10px" }}>
+      <Card elevation={3} sx={{ maxWidth: 280, borderRadius: "10px", margin: '7px' }}>
         <CardContent>
         <Box 
             sx={{
@@ -22,18 +22,18 @@ export default function Item({curso}) {
               width: '250px',
               height: '150px',
               overflow: 'hidden',
-              borderRadius: '20px' 
+              borderRadius: '5px'
             }}
         >
-        <img src={curso.pictureUrl} alt={curso.title} style={{flexShrink: 1, minWidth: '100%', minHeight: 'auto', objectFit: 'cover' }} />
+        <img src={curso.pictureUrl} alt={curso.title} style={{width: '100%', height: 'auto', objectFit: 'cover' }} />
       </Box>
         </CardContent>
         <CardActions>
           <Grid container spacing={2} direction="row" justifyContent="center" >
             <Grid item xl={12}>
-              <div>Curso {curso.title}</div>
-              <div>Nivel: {curso.description}</div>
-              <div>Precio: ${curso.price}</div>
+              <div><b>Curso:</b> {curso.title}</div>
+              <div><b>Nivel:</b> {curso.category}</div>
+              <div><b>Precio:</b> ${curso.price}</div>
               <Button component={Link} to={filtro} variant="contained" color='primary' sx={{marginTop: "5px"}}>
                 Ver mas...
               </Button>
