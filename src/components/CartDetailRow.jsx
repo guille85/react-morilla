@@ -6,17 +6,9 @@ import IconButton from '@mui/material/IconButton';
 
 export default function CartDetailRow({item}) {
 
-const {removeItem} = useContext(CartContext);
+const {removeItem, totalPriceCart} = useContext(CartContext);
 const { id, title, quantity, price } = item;
 
-const [del, setDel] = useState(true);
-
-const removeLocal = () => {
-  if(del){
-    removeItem(id);
-    setDel(false);
-  }
-}
   return (
 
     <TableRow
@@ -29,9 +21,9 @@ const removeLocal = () => {
         {title}
       </TableCell>
       <TableCell>$ {price}</TableCell>
-      <TableCell>$ {price * quantity}</TableCell>
+      <TableCell>$ {quantity * price}</TableCell>
       <TableCell>
-         <IconButton aria-label="delete" color="primary"  onClick={removeLocal}>
+         <IconButton aria-label="delete" color="primary"  onClick={() => removeItem(id)}>
             <DeleteIcon />
          </IconButton>
       </TableCell>

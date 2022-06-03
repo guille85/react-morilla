@@ -6,7 +6,7 @@ import {Link} from 'react-router-dom';
 
 export default function Cart() {
 
-    const { cart, totalInCart, clearCart } = useContext(CartContext);
+    const { cart, totalInCart, clearCart, totalPriceCart } = useContext(CartContext);
 
   return (
     <Box
@@ -21,7 +21,7 @@ export default function Cart() {
       {
         Boolean(cart.length) ? (
 
-          <CartDetailTable cart={cart} totalInCart={totalInCart()} clearCart={clearCart} />
+          <CartDetailTable cart={cart} totalInCart={totalInCart()} clearCart={clearCart} totalPriceCart={totalPriceCart()}/>
 
         ) : (
           <Box container

@@ -7,13 +7,12 @@ export const CartProvider = ({children}) => {
     const [cart, setCart] = useState([]); // estado inicial: carro vacío
     
     //método addItem => agrega un elemento y su cantidad al carro
+    
     const addItem = ( item ) => {
     let cartTemp = [];
-       if(isInCart(item.id) === -1){
-         alert('El producto no estaba en el carro, se va a agregar'); 
+       if(isInCart(item.id) === false){ 
         cartTemp = cart.concat(item);     
-       }else{
-         alert('El producto ya se encuentra en el carro!!');           
+       }else{       
          cartTemp = cart.reduce((acc, prod) => {
             if(item.id !== prod.id){
                 return acc.concat(prod);
@@ -34,12 +33,11 @@ export const CartProvider = ({children}) => {
     //método clear => quita todos los elementos del carro
     const clearCart = () => {
         setCart([]);
-        alert('Se quitaron todos los elementos del carrrito!!');
     }
 
     //método isInCart => verifica si un elemento se encuentra en el carro
     const isInCart = (itemId) => {
-        return cart.indexOf(itemId);
+        return cart.some(item => item.id === itemId);
     }
 
     //método que va a determinar cuántas unidades de un producto hay en el carro
@@ -58,13 +56,20 @@ export const CartProvider = ({children}) => {
         }, 0)
       }
 
+      const totalPriceCart = () => {
+        return cart.reduce((acc, _item) => {
+          return acc + (_item.quantity * _item.price)
+        }, 0);
+      }
+
     return (
         <CartContext.Provider value={{ addItem, 
                                        removeItem,
                                        quantityInCart, 
                                        clearCart,
                                        cart,
-                                       totalInCart                                      
+                                       totalInCart,
+                                       totalPriceCart
                                     }}>
             { children }
         </CartContext.Provider>

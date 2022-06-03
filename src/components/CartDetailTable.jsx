@@ -4,9 +4,7 @@ import { Box, Button, Grid, Paper, Table, TableBody, TableCell, TableContainer, 
 import { grey } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 
-export default function CartDetailTable({ cart, totalInCart, clearCart }) {
-
-    console.log('el precio es: ', cart);
+export default function CartDetailTable({ cart, totalInCart, clearCart, totalPriceCart }) {
 
   return (
     <Box
@@ -44,11 +42,7 @@ export default function CartDetailTable({ cart, totalInCart, clearCart }) {
             <TableCell>
               <Typography variant='body1'>
                 Importe total: $
-                {
-                  cart.reduce((acc, prod) => {
-                    return acc + (prod.quantity * prod.price)
-                  }, 0)
-                }
+                { totalPriceCart }
               </Typography>
             </TableCell>
           </TableRow>

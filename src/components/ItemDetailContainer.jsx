@@ -3,7 +3,6 @@ import React from 'react'
 import ItemDetail from './ItemDetail';
 import { useEffect, useState } from 'react';
 import {Grid, Box, CircularProgress} from '@mui/material';
-//import cursos from '../mocks/cursosMock';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 
@@ -11,7 +10,7 @@ export default function ItemDetailContainer() {
 const { detailId } = useParams();
 const [detailCurso, setDetailCurso] = useState({});
 const [error, setError] = useState(false);
-const [loading, setLoading] = useState("true");
+const [loading, setLoading] = useState(true);
 
 useEffect(() => {
 
