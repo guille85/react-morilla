@@ -34,7 +34,8 @@ export default function Item({curso}) {
               <div><b>Curso:</b> {curso.title}</div>
               <div><b>Nivel:</b> {curso.category}</div>
               <div><b>Precio:</b> ${curso.price}</div>
-              <Button component={Link} to={filtro} variant="contained" color='primary' sx={{marginTop: "5px"}}>
+              <div><b>Stock: </b>{curso.stock}</div>
+              <Button component={Link} to={filtro} variant="contained" color='primary' sx={{marginTop: "5px"}} fullWidth>
                 Ver mas...
               </Button>
             </Grid>

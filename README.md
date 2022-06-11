@@ -1,18 +1,74 @@
-E-Dev Books
-Estado: Primera entrega del proyecto final 
 
-Descripción
-Este repositorio contiene el proyecto desarrollado durante el curso introductorio a React. El mismo consta de un e-commerce que en mi caso se trata de libros de programación. Esta conformado por una NavBar, un carro de compras, un catalogo, 3 filtros de acuerdo al nivel del libro buscado. Ademas cuenta con la posibilidad de navegar desde el catalogo a la vista "detallada" de un producto particular.
+# E-Dev Books
 
-Tecnologías utilizadas
-React JS
-Material UI
-React Router Dom
+# Descripción
+Este proyecto fue creado en el curso de React Js dictado por CoderHouse
 
-Para ejecutar el proyecto se debe instalar las dependencias:
+El proyecto consiste en un e-commerce que cuenta con las siguientes características:
+* Listado de productos
+* Detalle de productos
+* Categorías de productos
+* Control de stock
+* Carro de compras
+* Detalle de los productos incluidos en el carro de compras
+* Generación de orden de compra
 
+El carro de compras, los productos y las ordenes se almacenan en la base de datos provista por Firebase.
+
+# Tecnologías utilizadas
+* React Js
+* Material UI
+* React Router Dom
+* Firebase
+
+# Para iniciar el proyecto
+Clonar el repositorio
+
+```
+git clone https://github.com/guille85/react-morilla.git
+```
+
+Dependencias a instalar:
+
+```
 npm install
-Luego iniciar el servidor con:
+```
 
+# En Firebase
+Crear la colección `products` cuyos objetos tendrán la siguiente forma:
+
+```
+product = {
+  category: "basico"
+  description: "descripción"
+  pictureUrl: "url de la imagen"
+  price: 1000
+  stock: 100
+  title: "Titulo del producto"
+}
+```
+
+Tambien se debe crear la colección `category` que será como se muestra a continuación:
+
+```
+category = {
+  name: "basico"
+}
+```
+
+Otra colección necesaria es la de las `orders`, ésta se creará automáticamente al generar la primer orden de compra.
+
+Una vez hecho todo lo anterior, debemos ir a la terminal, pararnos dentro de la carpeta del proyecto y
+ejecutar el siguiente comando para poner a correr el proyecto.
+
+```
 npm start
-El proyecto estará corriendo en http://localhost:3000
+```
+Lo que hará que se levante el servidor que podemos encontrarlo en el navegador en la siguiente url:
+
+`http://localhost:3000`
+
+
+# Demostración de uso de la aplicación
+
+![GIF de muestra.](/public/demo-ecommerce.gif "Vista del proyecto.")

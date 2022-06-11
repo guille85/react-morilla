@@ -35,8 +35,7 @@ export const NavBar = () => {
               <Typography
                 variant="h4"
                 noWrap
-                href="/"
-                component="a"
+                component={Link} to="/"
                 sx={{
                   display: { xs: 'none', md: 'flex' },
                   textDecoration: 'none',

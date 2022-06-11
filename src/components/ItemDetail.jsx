@@ -14,9 +14,8 @@ export default function ItemDetail({curso}) {
 
   const {addItem, removeItem} = useContext(CartContext);
 
-  //aca tendria que controlar el stock antes de agregar al carro
   const onAdd = (count) => {
-    if (count > 0) {
+    if (count > 0 ) {
       addItem({...curso, quantity:count});
       setProdInCart(true);
     } else {
@@ -28,6 +27,7 @@ export default function ItemDetail({curso}) {
        removeItem(id);
        setProdInCart(false);
   }
+ 
 
   return (
     <Box 

@@ -8,46 +8,97 @@ import ContactMailIcon from '@mui/icons-material/ContactMail';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import {Link} from 'react-router-dom';
+import { serverTimestamp } from "firebase/firestore";
 
 export default function Checkout() {
 
   const [orderId, setOrderId] = useState('');
+  const [enableButton, setEnableButton] = useState(true);
+
 
   const { cart, totalPriceCart, clearCart } = useContext(CartContext);
 
   const [buyer, setBuyer] = useState({
-    name: "",
     email: "",
+    name: "",
     phone: "",
+  });
+ 
+  const [errors, setErrors] = useState({
+    email: false,
+    name: false,
+    phone: false
   });
 
   const handleChange = (e) => {
     e.preventDefault();
-    setBuyer({ ...buyer, [e.target.name]: e.target.value });
+    if(!e.target.value) {
+      setErrors({...errors, [e.target.name]: true});
+    } else {
+      setErrors({...errors, [e.target.name]: false});
+      setBuyer({ ...buyer, [e.target.name]: e.target.value });
+    }
+    
   };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let total = 0;
-    total = totalPriceCart();
 
-    const order = {
-      buyer,
-      cart,
-      total
+    if (validateForm()) {
+      let total = 0;
+      total = totalPriceCart();
+      const order = {
+        buyer,
+        cart,
+        fecha: serverTimestamp(),
+        total,
+      };
+
+      const db = getFirestore();
+      const orders = collection(db, "orders");
+      addDoc(orders, order).then(({ id }) => {
+        setOrderId(id);
+        clearForm();
+        setEnableButton(false);
+        clearCart();
+      });
     }
-
-    const db = getFirestore();
-    const orders = collection(db, "orders");
-    addDoc(orders, order).then(({ id }) => { 
-    setOrderId(id);
-    clearForm();
-    clearCart();
-      })
   }
 
   const clearForm = () => {
-    setBuyer({ name: "", email: "" , phone: ""});
+    setBuyer({ email: "", name: "" , phone: ""});
+  }
+
+  const clearErrors = () => {
+    setErrors({email:false, name: false, phone:false})
+  }
+
+  const validateForm = () => {
+    
+    clearErrors();
+    let validForm = true;
+
+    if (!buyer.name) {
+      setErrors(formErrors => ({ ...formErrors, name: true }));
+      validForm = false;
+    }
+    if (
+      !buyer.phone ||
+      !/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/.test(buyer.phone)
+    ) {
+      setErrors(formErrors => ({ ...formErrors, phone: true }));
+      validForm = false;
+    }
+    if (!buyer.email || 
+        !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(buyer.email)
+    ) {
+      setErrors(formErrors => ({ ...formErrors, email: true }));
+      validForm = false;
+    }
+
+    return validForm
+
   }
 
   return (
@@ -83,12 +134,13 @@ export default function Checkout() {
               ),
             }}
             sx={{ marginBottom: "20px" }}
-            required
             id="outlined-required"
             label="Nombre"
             onChange={handleChange}
             value={buyer.name}
             name="name"
+            error={ errors.name }
+            helperText={ errors.name && 'Debe ingresr su nombre'}
           />
           <TextField
             InputProps={{
@@ -99,12 +151,13 @@ export default function Checkout() {
               ),
             }}
             sx={{ marginBottom: "20px" }}
-            required
             id="outlined-required"
             label="Email"
             onChange={handleChange}
             value={buyer.email}
             name="email"
+            error={errors.email}
+            helperText={errors.email && 'Debe ingresar un email ejemplo@ejemplo.com'}
           />
           <TextField
             InputProps={{
@@ -114,12 +167,13 @@ export default function Checkout() {
                 </InputAdornment>
               ),
             }}
-            required
             id="outlined-required"
             label="Telefono"
             onChange={handleChange}
             value={buyer.phone}
             name="phone"
+            error={errors.phone}
+            helperText={errors.phone && 'Debe ingresar un teléfono'}
           />
           <Button
             color="primary"
@@ -133,10 +187,11 @@ export default function Checkout() {
             }}
             type="submit"
             variant="contained"
+            disabled={!enableButton}
           >
-            Finalizar compra
+            Comprar
           </Button>
-        </form>
+        </form> 
       </Box>
       <Box sx={{
           width: "50%",
